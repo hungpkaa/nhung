@@ -1,0 +1,26 @@
+{
+  "name": "smart-garden-esp32-wokwi",
+  "version": "1.0.0",
+  "description": "Smart garden monitoring and control system using ESP32 Wokwi, Node.js Express, SQLite, and a web dashboard.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "simulate": "node src/simulator.js"
+  },
+  "keywords": [
+    "esp32",
+    "wokwi",
+    "express",
+    "sqlite",
+    "smart-garden"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}

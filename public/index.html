@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Garden Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ESP32 Wokwi</p>
+          <h1>Smart Garden Dashboard</h1>
+        </div>
+        <div class="status-pill" id="connectionStatus">Đang kết nối</div>
+      </header>
+
+      <section class="insight-panel panel" id="insightPanel">
+        <span>Trạng thái thông minh</span>
+        <strong id="smartStatus">Đang chờ dữ liệu</strong>
+      </section>
+
+      <section class="metrics-grid" aria-label="Thông số cảm biến">
+        <article class="metric">
+          <span>Nhiệt độ</span>
+          <strong id="temperature">--</strong>
+          <small>°C</small>
+        </article>
+        <article class="metric">
+          <span>Độ ẩm không khí</span>
+          <strong id="airHumidity">--</strong>
+          <small>%</small>
+        </article>
+        <article class="metric">
+          <span>Độ ẩm đất</span>
+          <strong id="soil">--</strong>
+          <small>%</small>
+        </article>
+        <article class="metric">
+          <span>Ánh sáng</span>
+          <strong id="light">--</strong>
+          <small>%</small>
+        </article>
+        <article class="metric">
+          <span>Mực nước</span>
+          <strong id="waterLevel">--</strong>
+          <small>%</small>
+        </article>
+        <article class="metric">
+          <span>Hệ thống</span>
+          <strong id="systemState">--</strong>
+          <small id="modeState">--</small>
+        </article>
+      </section>
+
+      <section class="device-grid" aria-label="Trạng thái thiết bị">
+        <article class="device-state">
+          <span>Bơm</span>
+          <strong id="pumpState">--</strong>
+        </article>
+        <article class="device-state">
+          <span>Còi báo</span>
+          <strong id="buzzerState">--</strong>
+        </article>
+        <article class="device-state">
+          <span>Đèn trồng cây</span>
+          <strong id="growLightState">--</strong>
+        </article>
+      </section>
+
+      <section class="summary-grid" aria-label="Thống kê hệ thống">
+        <article class="summary-item">
+          <span>Số lần bơm bật</span>
+          <strong id="pumpActivations">--</strong>
+        </article>
+        <article class="summary-item">
+          <span>Cảnh báo đất khô</span>
+          <strong id="drySoilAlerts">--</strong>
+        </article>
+        <article class="summary-item">
+          <span>Cảnh báo thiếu nước</span>
+          <strong id="lowWaterAlerts">--</strong>
+        </article>
+        <article class="summary-item">
+          <span>Cảnh báo ánh sáng yếu</span>
+          <strong id="lowLightAlerts">--</strong>
+        </article>
+      </section>
+
+      <section class="work-grid">
+        <div class="panel chart-panel">
+          <div class="panel-header">
+            <h2>Biểu đồ dữ liệu</h2>
+            <span id="lastUpdated">--</span>
+          </div>
+          <canvas id="telemetryChart" height="120"></canvas>
+        </div>
+
+        <aside class="panel controls-panel">
+          <div class="panel-header">
+            <h2>Điều khiển</h2>
+          </div>
+
+          <button type="button" class="system-button" id="systemToggle">Bật hệ thống</button>
+
+          <div class="segmented" role="group" aria-label="Chế độ">
+            <button type="button" id="autoMode" class="active">Tự động</button>
+            <button type="button" id="manualMode">Thủ công</button>
+          </div>
+
+          <button type="button" class="pump-button" id="pumpToggle">Bật bơm</button>
+
+          <div class="scenario-panel">
+            <h3>Kịch bản demo</h3>
+            <div class="scenario-grid">
+              <button type="button" data-scenario="dry_soil">Đất khô</button>
+              <button type="button" data-scenario="low_water">Thiếu nước</button>
+              <button type="button" data-scenario="low_light">Ánh sáng yếu</button>
+              <button type="button" data-scenario="reset_environment">Reset</button>
+            </div>
+          </div>
+
+          <form id="settingsForm" class="settings-form">
+            <label>
+              Ngưỡng đất khô (%)
+              <input id="dryThreshold" type="number" min="0" max="100" />
+            </label>
+            <label>
+              Ngưỡng đất quá ẩm (%)
+              <input id="wetThreshold" type="number" min="0" max="100" />
+            </label>
+            <label>
+              Ngưỡng ánh sáng yếu (%)
+              <input id="lightThreshold" type="number" min="0" max="100" />
+            </label>
+            <label>
+              Cảnh báo thiếu nước (%)
+              <input id="waterLowThreshold" type="number" min="0" max="100" />
+            </label>
+            <label>
+              Giới hạn bơm (giây)
+              <input id="maxPumpTime" type="number" min="1" max="300" />
+            </label>
+            <button type="submit">Lưu ngưỡng</button>
+          </form>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Cảnh báo</h2>
+        </div>
+        <div id="alerts" class="alerts"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

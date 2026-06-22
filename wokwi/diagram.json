@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "author": "Smart Garden",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -120, "left": 230, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "soil", "top": 170, "left": 225, "attrs": {} },
+    { "type": "wokwi-photoresistor-sensor", "id": "ldr", "top": -115, "left": -210, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "water", "top": 170, "left": -210, "attrs": {} },
+    { "type": "wokwi-led", "id": "pumpLed", "top": 55, "left": 300, "attrs": { "color": "blue", "label": "Bơm" } },
+    { "type": "wokwi-buzzer", "id": "buzzer", "top": 50, "left": -280, "attrs": {} },
+    { "type": "wokwi-led", "id": "growLed", "top": 125, "left": 300, "attrs": { "color": "limegreen", "label": "Đèn cây" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+
+    [ "esp:3V3", "dht1:VCC", "red", [ "h0" ] ],
+    [ "esp:GND.1", "dht1:GND", "black", [ "h0" ] ],
+    [ "esp:15", "dht1:SDA", "green", [ "h0" ] ],
+
+    [ "esp:3V3", "soil:VCC", "red", [ "h0" ] ],
+    [ "esp:GND.1", "soil:GND", "black", [ "h0" ] ],
+    [ "esp:34", "soil:SIG", "green", [ "h0" ] ],
+
+    [ "esp:3V3", "water:VCC", "red", [ "h0" ] ],
+    [ "esp:GND.2", "water:GND", "black", [ "h0" ] ],
+    [ "esp:35", "water:SIG", "green", [ "h0" ] ],
+
+    [ "esp:3V3", "ldr:VCC", "red", [ "h0" ] ],
+    [ "esp:GND.2", "ldr:GND", "black", [ "h0" ] ],
+    [ "esp:32", "ldr:AO", "green", [ "h0" ] ],
+
+    [ "esp:26", "pumpLed:A", "blue", [ "h0" ] ],
+    [ "esp:GND.1", "pumpLed:C", "black", [ "h0" ] ],
+    [ "esp:27", "buzzer:1", "red", [ "h0" ] ],
+    [ "esp:GND.2", "buzzer:2", "black", [ "h0" ] ],
+    [ "esp:25", "growLed:A", "green", [ "h0" ] ],
+    [ "esp:GND.2", "growLed:C", "black", [ "h0" ] ]
+  ],
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "terminal",
+    "newline": "lf",
+    "convertEol": false
+  }
+}
